@@ -8,7 +8,39 @@ Contributors:
 
 ---
 
-## 02 - Bias Analysis: Executive Summary
+## 01 - Data Engineer:
+
+**Critical findings:**
+
+**Consistency:**
+Income - 488 correct values, 8 as stings, 1 as float and 5 values had been stored in a variable called annaul_salary. All have been correctly transformend and safed as annual income.
+
+Gender - 388 correctly labled values, 111 labeld as "M" or "F" and 3 missing values. All existing values have been transformed into the right format.
+
+Date of Birth - 340 correctly formated values, 157 incorrect formats that hav been corrected, with 57 of these being flaged as ambigouos based on month and date.
+
+**Completness:**
+There were 5 missing dates of birth. 3 missing genders, 2 of which have been allocated bast on their first names. 5 instances of missing income, which have been deleted from the dataset in order not to bias the dataset. 5 missing SSN and IPs.
+
+**Validity:**
+Income - One isntance of an income equal to zero, which has been set to None, as the value is impossible.
+
+Credit history - Two negative values set to None, as they are also impossible.
+
+Debt to Income ratio - One suspicious outlier of 1.85 set to None.
+
+Saving balance - One negative values has been set to None, as negative values are  impossible in a standard savings account.
+
+Emails - 4 invalid emails recognissed.
+
+**Uniqueness:**
+
+Name & SSN - Two cases of duplicate people. One case has been deleted (app_001) and the other kept, because it was a resubmission.
+
+SSN - Two cases of duplicate SSNs.
+
+
+## 02 - Bias Analysis:
 
 We analyze algorithmic bias in NovaCred's credit approval system across 496 applications.
 
