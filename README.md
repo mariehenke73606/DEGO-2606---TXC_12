@@ -29,7 +29,7 @@ This project conducts a full data governance audit of **NovaCred's credit applic
 
 <div align="center">
 
-![alt text](image.png)
+<img src="image.png" width="800"/>
 
 </div>
 
