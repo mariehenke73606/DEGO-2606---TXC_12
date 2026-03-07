@@ -1,3 +1,16 @@
+# What' missing in the README:
+- Role and contributions distribution table (who did what and equal effort)
+- dataset description (table with category, field, type, short description)
+- repository structure tree 
+- version control and collaboration working process (pull, branch, create, pull, add, commit, push, open pull request, compare changes/conflicts, merge into main)
+- short description of pipeline (first 01, then 02... and key actions that happen in each pipeline) for reproducibility
+- for each chapter (01/02/03): table of key findings and key metrics, with severity/risk level etc.
+- table of content of readme on the top for better orientation 
+- actionable governance recommendations
+
+
+
+
 # DEGO-2606---TXC_12
 DEGO 2606 Group Project – Credit Application Governance Analysis
 
