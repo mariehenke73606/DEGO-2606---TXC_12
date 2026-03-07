@@ -27,11 +27,6 @@
 
 This project conducts a full data governance audit of **NovaCred's credit application system** across 496 records, covering data quality, algorithmic fairness, and GDPR/EU AI Act compliance. We identify systematic discrimination against female and younger applicants (Disparate Impact as low as 0.667), 9 distinct GDPR violations with zero governance infrastructure across all records, and classify the credit scoring system as **High-Risk AI** under EU AI Act Annex III, Category 5(b) — meeting 0 of 6 mandatory requirements. The analysis culminates in a prioritised 10-control governance roadmap designed to bring NovaCred into regulatory compliance within 180 days.
 
-<div align="center">
-
-<img src="image.png" width="800"/>
-
-</div>
 
 ---
 
