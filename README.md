@@ -69,20 +69,6 @@ DEGO-2606---TXC_12/
 
 Every contribution followed a **branch-based Git workflow** to ensure isolated development, traceability, and conflict-free integration into `main`.
 
-### Workflow Steps
-
-```
-1. PULL        git pull origin main          ← Sync local repo with latest remote
-2. BRANCH      git checkout -b feature/xyz   ← Create an isolated feature branch
-3. CREATE      (edit / add files)            ← Implement changes locally
-4. PULL        git pull origin main          ← Re-sync before pushing to catch conflicts early
-5. ADD         git add .                     ← Stage changed files
-6. COMMIT      git commit -m "message"       ← Save a descriptive snapshot
-7. PUSH        git push origin feature/xyz   ← Upload branch to remote
-8. PULL REQ.   Open Pull Request on GitHub   ← Propose merging into main
-9. COMPARE     Review diff / resolve any conflicts in the PR
-10. MERGE      Merge Pull Request → main     ← Integrate reviewed code
-```
 
 ### Workflow Diagram
 
