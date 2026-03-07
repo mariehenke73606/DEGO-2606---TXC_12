@@ -1,7 +1,7 @@
 <div align="center">
 
 # NovaCred Data Governance Task Force
-### DEGO-2606 · Group Project · Credit Application Governance Analysis
+### DEGO-2606 · Group TXC12 · Credit Application Governance Analysis
 
 ![Data Quality](https://img.shields.io/badge/Notebook_01-Data_Quality-blue?style=for-the-badge)
 ![Bias Analysis](https://img.shields.io/badge/Notebook_02-Bias_Analysis-orange?style=for-the-badge)
@@ -25,7 +25,13 @@
 
 ## Project Description
 
-This project conducts a full data governance audit of **NovaCred's credit application system** across 496 records, covering data quality, algorithmic fairness, and GDPR/EU AI Act compliance. We identify systematic discrimination against female and younger applicants (Disparate Impact as low as 0.667), 9 distinct GDPR violations with zero governance infrastructure across all records, and classify the credit scoring system as a High-Risk AI under EU AI Act Annex III meeting 0 of 6 mandatory requirements. The analysis culminates in a prioritised 10-control governance roadmap designed to bring NovaCred into regulatory compliance within 180 days.
+This project conducts a full data governance audit of **NovaCred's credit application system** across 496 records, covering data quality, algorithmic fairness, and GDPR/EU AI Act compliance. We identify systematic discrimination against female and younger applicants (Disparate Impact as low as 0.667), 9 distinct GDPR violations with zero governance infrastructure across all records, and classify the credit scoring system as **High-Risk AI** under EU AI Act Annex III, Category 5(b) — meeting 0 of 6 mandatory requirements. The analysis culminates in a prioritised 10-control governance roadmap designed to bring NovaCred into regulatory compliance within 180 days.
+
+<div align="center">
+
+![alt text](image.png)
+
+</div>
 
 ---
 
@@ -127,6 +133,18 @@ Starting from **502 raw records**, the pipeline removed **6 records** (1 true du
 > **Author:** Simon Anthofer &nbsp;|&nbsp; **Tools:** pandas, numpy, scipy, fairlearn, scikit-learn, seaborn
 
 This notebook analyses algorithmic fairness in NovaCred's credit approval decisions across **496 applications** using Disparate Impact (DI) ratios, Chi-square tests, Mann-Whitney U tests, Spearman correlations, logistic regression LRT interaction tests, and K-Means clustering. The analysis establishes that gender and age discrimination is **systematic and statistically confirmed**, with the youngest female applicants facing a compound disadvantage.
+
+### Disparate Impact Formula
+
+The **Disparate Impact Ratio (DI)** measures whether an unprivileged group receives favourable outcomes at a proportionally lower rate than a privileged group. The widely adopted regulatory threshold is the **Four-Fifths (80 %) Rule**: a DI below 0.8 indicates adverse impact.
+
+$$DI = \frac{P(\hat{Y}=1 \mid A=\text{unprivileged})}{P(\hat{Y}=1 \mid A=\text{privileged})}$$
+
+Where $\hat{Y}=1$ denotes a positive decision (loan approved) and $A$ is the protected attribute (e.g. gender, age group). A value of $DI < 0.8$ violates the Four-Fifths Rule; $DI = 1.0$ indicates perfect parity.
+
+For the gender case in this analysis:
+
+$$DI_{\text{gender}} = \frac{P(\text{Approved} \mid \text{Female})}{P(\text{Approved} \mid \text{Male})} = \frac{0.5081}{0.6573} = 0.773 \quad \Rightarrow \quad \text{Four-Fifths Rule violated}$$
 
 ### Key Findings & Metrics
 
