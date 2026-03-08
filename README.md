@@ -104,11 +104,11 @@ This notebook performs a comprehensive 6-dimension data quality audit of the raw
 | **Consistency** | `annual_income` aliased as `annual_salary` in 5 records | 5 | 🟠 HIGH | Renamed to `annual_income` |
 | **Consistency** | `gender` encoded as `"M"` / `"F"` instead of full word | 111 | 🟠 HIGH | Standardised to `"Male"` / `"Female"` |
 | **Consistency** | `date_of_birth` in 7 different formats | 157 | 🔴 CRITICAL | Standardised to ISO 8601 (`YYYY-MM-DD`); 57 flagged as ambiguous |
-| **Completeness** | Missing `date_of_birth` | 5 | 🟠 HIGH | Dropped (< 1 %, random distribution) |
+| **Completeness** | Missing `date_of_birth` | 4 | 🟠 HIGH | Removed (< 1 %, random distribution) |
 | **Completeness** | Missing `gender` | 3 | 🟡 MEDIUM | 2 resolved via first name; 1 removed (duplicate) |
 | **Completeness** | Missing `annual_income` | 5 | 🟠 HIGH | Resolved via `annual_salary` rename |
 | **Completeness** | Missing `SSN` / `IP address` | 5 each | 🟡 MEDIUM | Documented; no imputation |
-| **Validity** | Zero annual income | 1 | 🟠 HIGH | Set to `None` |
+| **Validity** | Zero annual income | 1 | 🟠 HIGH | Removed |
 | **Validity** | Negative credit history months | 2 | 🟠 HIGH | Set to `None` |
 | **Validity** | DTI outlier of 1.85 (impossible) | 1 | 🟠 HIGH | Set to `None` |
 | **Validity** | Negative savings balance | 1 | 🟠 HIGH | Set to `None` |
