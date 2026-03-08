@@ -127,11 +127,32 @@ Starting from **502 raw records**, the pipeline removed **6 records** (1 true du
 
 > **Author:** Simon Anthofer &nbsp;|&nbsp; **Tools:** pandas, numpy, scipy, fairlearn, scikit-learn, seaborn
 
-This notebook analyses algorithmic fairness in NovaCred's credit approval decisions across **496 applications** using Disparate Impact (DI) ratios, Chi-square tests, Mann-Whitney U tests, Spearman correlations, logistic regression LRT interaction tests, and K-Means clustering. The analysis establishes that gender and age discrimination is **systematic and statistically confirmed**, with the youngest female applicants facing a compound disadvantage.
+This notebook analyses algorithmic fairness in NovaCred's credit approval decisions across **496 applications** using Disparate Impact (DI) ratios, Chi-square tests, Mann-Whitney U tests, Spearman correlations, logistic regression LRT interaction tests, and K-Means clustering. The analysis establishes that gender and age discrimination is **systematic and statistically confirmed**, with the youngest female applicants facing a compound disadvantage. The notebook frames findings through a structured bias taxonomy (Historical, Selection, Measurement, Aggregation, Feedback Loop) and discusses the key fairness metrics alongside the inherent impossibility of satisfying all metrics simultaneously.
+
+### Bias Taxonomy
+
+All five primary bias types are identifiable in the NovaCred dataset:
+
+| Bias Type | NovaCred Evidence |
+|-----------|-------------------|
+| **Historical** | Approval disparities may echo decades of under-representation of women and young applicants in historical lending records |
+| **Selection** | All ZIP codes are urban (NYC / LA area); rural and suburban applicants are absent, limiting model generalisability |
+| **Measurement** | ZIP code proxies race/SES; credit history (ρ = 0.63) and savings balance (ρ = 0.37) structurally proxy age |
+| **Aggregation** | A single approval threshold is applied across all age groups despite fundamentally different financial profiles |
+| **Feedback Loop** | Lower approval rates for females and young applicants → less repayment data collected → disparities risk widening over time |
+
+### Fairness Metrics
+
+| Metric | What It Measures |
+|--------|-----------------|
+| **Disparate Impact (DI)** | Approval rate (minority) / Approval rate (majority) ≥ 0.8 (Four-Fifths Rule) |
+| **Demographic Parity** | Equal approval rates across groups |
+| **Equalized Odds** | Equal true positive *and* false positive rates across groups |
+| **Predictive Parity** | Equal precision across groups |
+
+> **Note:** These metrics cannot all be satisfied simultaneously when base rates differ across groups (Chouldechova, 2017). Selecting which metric to prioritise is a policy decision. This analysis prioritises *disparate impact* and *demographic parity* in line with EEOC adverse impact doctrine and GDPR non-discrimination obligations.
 
 ### Disparate Impact Formula
-
-The **Disparate Impact Ratio (DI)** measures whether an unprivileged group receives favourable outcomes at a proportionally lower rate than a privileged group. The widely adopted regulatory threshold is the **Four-Fifths (80 %) Rule**: a DI below 0.8 indicates adverse impact.
 
 $$DI = \frac{P(\hat{Y}=1 \mid A=\text{unprivileged})}{P(\hat{Y}=1 \mid A=\text{privileged})}$$
 
