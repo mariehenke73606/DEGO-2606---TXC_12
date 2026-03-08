@@ -112,7 +112,7 @@ This notebook performs a comprehensive 6-dimension data quality audit of the raw
 | **Validity** | Negative credit history months | 2 | 🟠 HIGH | Set to `None` |
 | **Validity** | DTI outlier of 1.85 (impossible) | 1 | 🟠 HIGH | Set to `None` |
 | **Validity** | Negative savings balance | 1 | 🟠 HIGH | Set to `None` |
-| **Validity** | Invalid email format | 4 | 🟡 MEDIUM | Set to `None` |
+| **Validity** | Invalid email format | 4 | 🟡 MEDIUM | Documented; no imputation |
 | **Uniqueness** | True duplicate record (`app_001` — Stephanie Nguyen) | 1 | 🔴 CRITICAL | Removed |
 | **Uniqueness** | Resubmission flagged in notes (Joseph Lopez) | 1 | 🟡 MEDIUM | Retained (legitimate resubmission) |
 | **Uniqueness** | Duplicate SSNs across different applicants | 2 pairs | 🟠 HIGH | Documented; no deletion possible |
