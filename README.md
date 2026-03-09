@@ -229,6 +229,24 @@ This notebook conducts a full GDPR and EU AI Act audit of NovaCred's credit appl
 | ZIP only | 1 | 2.0 | 25.8 % | 🔴 HIGH RISK |
 | Gender + Age band | 5 | — | 0.0 % | 🟠 MODERATE |
 
+#### k-Anonymity Weakness Analysis
+
+| Metric | Value | Interpretation |
+|--------|:-----:|----------------|
+| Total quasi-identifier groups (ZIP + Gender + Age band) | 430 | — |
+| Homogeneous groups (l = 1) | 406 (94.4 %) | All members share the same `loan_approved` value — homogeneity attack possible |
+| Records in homogeneous groups | 445 | These individuals' credit decision is fully exposed regardless of k |
+| Groups with l = 2 (diverse) | 24 (5.6 %) | Only these groups resist homogeneity attacks |
+| Minimum l-diversity | 1 | Fails l ≥ 2 threshold for binary sensitive field |
+| Homogeneous groups: all approved | 57 % | — |
+| Homogeneous groups: all rejected | 43 % | Privacy breach disproportionately exposes rejection decisions |
+
+> **Homogeneity Attack:** Even if k ≥ 5 were achieved, 94.4 % of groups share the same loan decision: an attacker who knows someone's ZIP, gender, and age band learns their credit outcome with certainty. This mirrors the lecture example (all records in ZIP=301** share "Heart Disease").
+>
+> **Background Knowledge Attack:** Unlike the lecture's Maria example (specialised knowledge needed), NovaCred's extreme homogeneity means everyday demographic information suffices, no specialised background knowledge required.
+>
+> **Countermeasures from lecture:** l-Diversity (each group ≥ 2 distinct decisions), t-Closeness (per-group distribution ≈ overall), Differential Privacy (calibrated noise on query outputs).
+
 #### GDPR Governance Gap (Mandatory Fields)
 
 | Field | GDPR Article | Principle | Records Present | Status |
@@ -256,6 +274,20 @@ This notebook conducts a full GDPR and EU AI Act audit of NovaCred's credit appl
 
 > **Regulatory Exposure:** Up to **€20M or 4 % of global annual turnover** under Art. 83(5) for lawful basis violations; up to **€10M or 2 %** under Art. 83(4) for organisational measure failures.
 
+#### Pseudonymisation: Three Approaches Compared
+
+| Criterion | Tokenization | Hashing (HMAC-SHA256) | Encryption (AES/Fernet) |
+|-----------|-------------|----------------------|------------------------|
+| How it works | Replace with random UUID token | One-way function with secret salt | Symmetric encryption with secret key |
+| Example | SSN → TKN_4A8F2B... | SSN → a3f2b1c9... | SSN → gAAAAB... |
+| Reversible? | Yes (with lookup table) | No (one-way) | Yes (with key) |
+| Risk if compromised | 🔴 HIGH — all records exposed | 🟡 MEDIUM — dictionary attack possible | 🔴 HIGH — full reversal |
+| Lookup table needed? | Yes (must be secured separately) | No | No (key only) |
+| GDPR Art. 4(5) compliant? | ✅ Yes (strongest isolation) | ✅ Yes | ✅ Yes (reversible for authorised use) |
+| Best use case | Internal record linkage | Cross-system matching without reversal | When original value must be recoverable |
+
+> All three methods were demonstrated on the SSN field. SSN was pseudonymised via HMAC-SHA256 (492 records, bijection confirmed), email via normalised SHA-256 (493 records). Cryptographic erasure via salt deletion supports Art. 17 right to erasure.
+
 #### EU AI Act Compliance (High-Risk — Annex III, Category 5(b))
 
 | Requirement | Article | Status |
@@ -268,6 +300,16 @@ This notebook conducts a full GDPR and EU AI Act audit of NovaCred's credit appl
 | Accuracy, Robustness & Cybersecurity | Art. 15 | ⚠️ PARTIAL |
 
 > **Verdict: 4 NOT MET · 2 PARTIAL · 0 FULLY COMPLIANT** — NovaCred must achieve full compliance before deployment.
+
+#### Privacy Spectrum Assessment (Lecture Reference — "The Privacy Spectrum")
+
+| Level | Technique | NovaCred Status | GDPR Status | Data Utility |
+|:-----:|-----------|:--------------:|-------------|:------------:|
+| 1 | Pseudonymisation (replace identifiers) | ✅ Demonstrated | Still personal data (Art. 4(5)) | HIGH |
+| 2 | Anonymisation / k-Anonymity (generalise or suppress) | ❌ Not achieved (k-min = 1, l-min = 1) | Not achieved — still personal data | MEDIUM |
+| 3 | Differential Privacy (add calibrated noise) | ⬜ Not implemented | Not personal data (mathematical guarantee) | LOWER |
+
+> NovaCred has demonstrated Level 1 for SSN and email. Level 2 was measured but not achieved — k-min = 1 and 94.4 % homogeneous groups mean k-anonymity alone is insufficient, confirming the lecture's warning about homogeneity attacks. Level 3 is recommended for any externally shared aggregate statistics.
 
 ### Governance Roadmap
 
